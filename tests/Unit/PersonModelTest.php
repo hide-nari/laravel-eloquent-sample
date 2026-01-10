@@ -91,7 +91,7 @@ test('person model update pattern', function () {
 
 });
 
-test('person model delete pattern', function () {
+test('person model soft delete pattern', function () {
     $inputName = 'taro';
     $inputAge = 15;
 
@@ -107,6 +107,22 @@ test('person model delete pattern', function () {
         ->and(Person::withTrashed()->count() === 1)->toBeTrue();
 });
 
+test('person model force delete pattern', function () {
+    $inputName = 'taro';
+    $inputAge = 15;
+
+    $person = Person::create([
+        'name' => $inputName,
+        'age'  => $inputAge,
+    ]);
+
+    expect(Person::all()->count() === 1)->toBeTrue();
+    $person->forceDelete();
+
+    expect(Person::all()->count() === 0)->toBeTrue()
+        ->and(Person::withTrashed()->count() === 0)->toBeTrue();
+});
+
 test('person model under 15 pattern', function () {
     $inputName = 'taro';
     $inputAge = 14;
@@ -114,4 +130,5 @@ test('person model under 15 pattern', function () {
         'name' => $inputName,
         'age'  => $inputAge,
     ]);
-})->throws(\Illuminate\Testing\Exceptions\InvalidArgumentException::class,"under 15");
+})->throws(\Illuminate\Testing\Exceptions\InvalidArgumentException::class,
+    "under 15");
