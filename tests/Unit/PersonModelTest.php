@@ -3,23 +3,58 @@
 use App\Models\Person;
 use Illuminate\Support\Carbon;
 
+test('person model factory no parameter test', function () {
+    $workTime = Carbon::now();
+
+    expect(Person::all()->count() === 0)->toBeTrue();
+    $person = Person::factory()->create();
+
+    expect(Person::all()->count() === 1)->toBeTrue()
+        ->and(isset($person->name))->toBeTrue()
+        ->and(isset($person->age))->toBeTrue()
+        ->and($person->created_at->toAtomString()
+            === $workTime->toAtomString())->toBeTrue()
+        ->and($person->updated_at->toAtomString()
+            === $workTime->toAtomString())->toBeTrue();
+});
+
+test('person model factory test', function () {
+    $inputName = 'taro';
+    $inputAge = 15;
+    $workTime = Carbon::now();
+
+    expect(Person::all()->count() === 0)->toBeTrue();
+    $person = Person::factory()->create([
+        'name' => $inputName,
+        'age'  => $inputAge,
+    ]);
+
+    expect(Person::all()->count() === 1)->toBeTrue()
+        ->and($person->name === $inputName)->toBeTrue()
+        ->and($person->age === $inputAge)->toBeTrue()
+        ->and($person->created_at->toAtomString()
+            === $workTime->toAtomString())->toBeTrue()
+        ->and($person->updated_at->toAtomString()
+            === $workTime->toAtomString())->toBeTrue();
+});
+
 test('person model create pattern', function () {
     $inputName = 'taro';
     $inputAge = 15;
     $workTime = Carbon::now();
 
     expect(Person::all()->count() === 0)->toBeTrue();
-    $department = Person::create([
+    $person = Person::create([
         'name' => $inputName,
         'age'  => $inputAge,
     ]);
 
     expect(Person::all()->count() === 1)->toBeTrue()
-        ->and($department->name === $inputName)->toBeTrue()
-        ->and($department->age === $inputAge)->toBeTrue()
-        ->and($department->created_at->toAtomString()
+        ->and($person->name === $inputName)->toBeTrue()
+        ->and($person->age === $inputAge)->toBeTrue()
+        ->and($person->created_at->toAtomString()
             === $workTime->toAtomString())->toBeTrue()
-        ->and($department->updated_at->toAtomString()
+        ->and($person->updated_at->toAtomString()
             === $workTime->toAtomString())->toBeTrue();
 });
 
@@ -31,7 +66,7 @@ test('person model update pattern', function () {
     $updateAge = 20;
     $beforeTime = Carbon::now();
 
-    $department = Person::create([
+    $person = Person::create([
         'name' => $inputName,
         'age'  => $inputAge,
     ]);
@@ -40,18 +75,18 @@ test('person model update pattern', function () {
     $afterTime = Carbon::now();
 
     expect(Person::all()->count() === 1)->toBeTrue();
-    $department->update(['name' => $updateName, 'age' => $updateAge]);
+    $person->update(['name' => $updateName, 'age' => $updateAge]);
 
     expect(Person::all()->count() === 1)->toBeTrue()
-        ->and($department->name === $updateName)->toBeTrue()
-        ->and($department->name === $inputName)->toBeFalse()
-        ->and($department->age === $updateAge)->toBeTrue()
-        ->and($department->age === $inputAge)->toBeFalse()
-        ->and($department->created_at->toAtomString()
+        ->and($person->name === $updateName)->toBeTrue()
+        ->and($person->name === $inputName)->toBeFalse()
+        ->and($person->age === $updateAge)->toBeTrue()
+        ->and($person->age === $inputAge)->toBeFalse()
+        ->and($person->created_at->toAtomString()
             === $beforeTime->toAtomString())->toBeTrue()
-        ->and($department->created_at->toAtomString()
+        ->and($person->created_at->toAtomString()
             === $afterTime->toAtomString())->toBeFalse()
-        ->and($department->updated_at->toAtomString()
+        ->and($person->updated_at->toAtomString()
             === $afterTime->toAtomString())->toBeTrue();
 
 });
@@ -60,13 +95,13 @@ test('person model delete pattern', function () {
     $inputName = 'taro';
     $inputAge = 15;
 
-    $department = Person::create([
+    $person = Person::create([
         'name' => $inputName,
         'age'  => $inputAge,
     ]);
 
     expect(Person::all()->count() === 1)->toBeTrue();
-    $department->delete();
+    $person->delete();
 
     expect(Person::all()->count() === 0)->toBeTrue()
         ->and(Person::withTrashed()->count() === 1)->toBeTrue();
