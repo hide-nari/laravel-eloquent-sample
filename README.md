@@ -4,7 +4,7 @@ Person eloquent sample on php version 8.4 or later.
 
 Person Model
 
-- public name
+- public name with header 'Mr.' include and initial uppercase
 - public age
 
 Model bind check with attribute

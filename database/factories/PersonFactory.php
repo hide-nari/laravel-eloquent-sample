@@ -11,7 +11,7 @@ class PersonFactory extends Factory
     {
         return [
             'name'       => $this->faker->name(),
-            'age'        => $this->faker->randomNumber(),
+            'age'        => $this->faker->numberBetween($min = 15, $max = 150),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

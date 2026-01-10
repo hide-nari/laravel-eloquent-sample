@@ -106,3 +106,12 @@ test('person model delete pattern', function () {
     expect(Person::all()->count() === 0)->toBeTrue()
         ->and(Person::withTrashed()->count() === 1)->toBeTrue();
 });
+
+test('person model under 15 pattern', function () {
+    $inputName = 'taro';
+    $inputAge = 14;
+    Person::create([
+        'name' => $inputName,
+        'age'  => $inputAge,
+    ]);
+})->throws(\Illuminate\Testing\Exceptions\InvalidArgumentException::class,"under 15");
