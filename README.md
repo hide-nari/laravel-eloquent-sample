@@ -17,7 +17,7 @@ Model bind check with attribute
 When updating, execute the following command.
 
 ```
-XXX
+art test
 ```
 
 ## License
