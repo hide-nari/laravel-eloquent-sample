@@ -30,7 +30,8 @@ class Person extends Model
     protected function age(): Attribute
     {
         return Attribute::make(
-            set: fn($value) => $value >= 15 ? $value : throw new InvalidArgumentException('under 15'),
+            set: fn($value) => $value >= 15 ? $value
+                : throw new InvalidArgumentException('under 15'),
         );
     }
 }
