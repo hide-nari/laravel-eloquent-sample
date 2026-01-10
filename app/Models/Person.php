@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Testing\Exceptions\InvalidArgumentException;
 
 class Person extends Model
 {
@@ -31,7 +30,7 @@ class Person extends Model
     {
         return Attribute::make(
             set: fn($value) => $value >= 15 ? $value
-                : throw new InvalidArgumentException('under 15'),
+                : throw new \InvalidArgumentException('under fifteen'),
         );
     }
 }

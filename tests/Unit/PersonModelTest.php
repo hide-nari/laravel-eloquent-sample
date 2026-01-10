@@ -130,5 +130,5 @@ test('person model under 15 pattern', function () {
         'name' => $inputName,
         'age'  => $inputAge,
     ]);
-})->throws(\Illuminate\Testing\Exceptions\InvalidArgumentException::class,
-    "under 15");
+})->throws(\InvalidArgumentException::class,
+    "under fifteen");
