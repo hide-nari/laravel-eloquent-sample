@@ -21,7 +21,7 @@ class Person extends Model
     {
         return Attribute::make(
             get: fn($value, array $attributes) => 'Mr.' . $value,
-            set: fn($value) => $value,
+            set: fn($value) => ucwords($value),
         );
     }
 }

@@ -30,7 +30,7 @@ test('person model factory test', function () {
     ]);
 
     expect(Person::all()->count() === 1)->toBeTrue()
-        ->and($person->name === 'Mr.' . $inputName)->toBeTrue()
+        ->and($person->name === 'Mr.'.ucwords($inputName))->toBeTrue()
         ->and($person->age === $inputAge)->toBeTrue()
         ->and($person->created_at->toAtomString()
             === $workTime->toAtomString())->toBeTrue()
@@ -50,7 +50,7 @@ test('person model create pattern', function () {
     ]);
 
     expect(Person::all()->count() === 1)->toBeTrue()
-        ->and($person->name === 'Mr.' . $inputName)->toBeTrue()
+        ->and($person->name === 'Mr.'.ucwords($inputName))->toBeTrue()
         ->and($person->age === $inputAge)->toBeTrue()
         ->and($person->created_at->toAtomString()
             === $workTime->toAtomString())->toBeTrue()
@@ -78,7 +78,7 @@ test('person model update pattern', function () {
     $person->update(['name' => $updateName, 'age' => $updateAge]);
 
     expect(Person::all()->count() === 1)->toBeTrue()
-        ->and($person->name === 'Mr.' . $updateName)->toBeTrue()
+        ->and($person->name === 'Mr.'.ucwords($updateName))->toBeTrue()
         ->and($person->name === $inputName)->toBeFalse()
         ->and($person->age === $updateAge)->toBeTrue()
         ->and($person->age === $inputAge)->toBeFalse()
