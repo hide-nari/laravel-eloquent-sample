@@ -7,9 +7,9 @@ Person Model
 - public name with header 'Mr.' include and initial uppercase
 - public age
 
-Model bind check with attribute
+Model bind check
 
-- name(4 to 15 length with added [Mr.] include)
+- name(2 to 30 length)
 - age(over 15)
 
 ## Update Rules
@@ -17,6 +17,7 @@ Model bind check with attribute
 When updating, execute the following command.
 
 ```
+herd coverage ./vendor/bin/pest --coverage
 art test
 ```
 

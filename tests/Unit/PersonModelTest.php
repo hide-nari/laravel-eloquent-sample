@@ -58,7 +58,6 @@ test('person model create pattern', function () {
             === $workTime->toAtomString())->toBeTrue();
 });
 
-
 test('person model update pattern', function () {
     $inputName = 'taro';
     $updateName = 'jiro';
@@ -123,6 +122,26 @@ test('person model force delete pattern', function () {
         ->and(Person::withTrashed()->count() === 0)->toBeTrue();
 });
 
+test('person model name min length pattern', function () {
+    $inputName = '原';
+    $inputAge = 15;
+    Person::create([
+        'name' => $inputName,
+        'age'  => $inputAge,
+    ]);
+})->throws(InvalidArgumentException::class,
+    'name length invalid');
+
+test('person model name max length pattern', function () {
+    $inputName = '1234567890123456789012345678901';
+    $inputAge = 15;
+    Person::create([
+        'name' => $inputName,
+        'age'  => $inputAge,
+    ]);
+})->throws(InvalidArgumentException::class,
+    'name length invalid');
+
 test('person model under 15 pattern', function () {
     $inputName = 'taro';
     $inputAge = 14;
@@ -131,4 +150,4 @@ test('person model under 15 pattern', function () {
         'age'  => $inputAge,
     ]);
 })->throws(InvalidArgumentException::class,
-    "under fifteen");
+    'under fifteen');
